@@ -9,10 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.azhar.university.guide.R;
 import com.azhar.university.guide.domain.communicator.OnLogoutCallback;
+import com.azhar.university.guide.presentation.ui.fragments.MoreFragment;
 import com.parse.ParseInstallation;
 
 import butterknife.BindView;
@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
                 return true;
             case R.id.navigation_more:
-
+                replace(MoreFragment.newInstance());
                 return true;
         }
         return false;
