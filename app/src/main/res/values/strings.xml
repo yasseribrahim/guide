@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Azhar University Guide</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_full_name">Full Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirmation_password">Confirm Password</string>
+    <string name="action_sign_in">Sign-In</string>
+    <string name="action_register">Register</string>
+    <string name="action_join_now">Join Now</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_full_name">This full name is too short</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is incorrect</string>
+    <string name="error_invalid_confirmation_password">Your password and confirmation password do not match</string>
+    <string name="error_field_required">This field is required</string>
+
+    <string name="label_retry">Retry</string>
+    <string name="msg_general_error">Error happened! please, try again</string>
+    <string name="msg_error_connection">Please, check your connection!</string>
+
+    <!-- Change the following strings as required -->
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">YwTdPhEffU8jKA3X5kFHODXV4O35VuNIaE2K6bRV</string>
+    <string name="back4app_client_key">JPajEWWLHlKwdtTs4nHkjK3qSZtwPuPYWQSL39YD</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
