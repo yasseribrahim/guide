@@ -1,25 +1,34 @@
-package com.azhar.university.guide.presentation.ui.activities;
+package com.azhar.university.guide.presentation.ui.fragments;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.azhar.university.guide.R;
 import com.azhar.university.guide.presentation.ui.dialogs.ProgressDialogFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+public abstract class BaseFragment extends Fragment {
+    private AppCompatActivity activity;
 
-public abstract class BaseActivity extends AppCompatActivity {
+    protected abstract View getSnackBarAnchorView();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    protected abstract View getSnackBarAnchorView();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (AppCompatActivity) context;
+    }
 
     public Snackbar showRetrySnackBar(String message, View.OnClickListener clickListener) {
         Snackbar snackbar = Snackbar.make(getSnackBarAnchorView(), message, Snackbar.LENGTH_INDEFINITE);
@@ -60,11 +69,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showProgress() {
-        ProgressDialogFragment.show(getSupportFragmentManager());
+        ProgressDialogFragment.show(activity.getSupportFragmentManager());
     }
 
     public void hideProgress() {
-        ProgressDialogFragment.hide(getSupportFragmentManager());
+        ProgressDialogFragment.hide(activity.getSupportFragmentManager());
     }
 }
-

@@ -32,8 +32,6 @@ public class LoginActivity extends BaseActivity implements ParseView {
     AutoCompleteTextView email;
     @BindView(R.id.password)
     EditText password;
-    @BindView(R.id.login_progress)
-    View mprogressview;
 
     private ParsePresenter presenter;
 
@@ -119,7 +117,6 @@ public class LoginActivity extends BaseActivity implements ParseView {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
             presenter.login(email, password);
         }
     }
@@ -136,42 +133,6 @@ public class LoginActivity extends BaseActivity implements ParseView {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
-    }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            loginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mprogressview.setVisibility(show ? View.VISIBLE : View.GONE);
-            mprogressview.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mprogressview.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mprogressview.setVisibility(show ? View.VISIBLE : View.GONE);
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
     @Override
@@ -198,16 +159,6 @@ public class LoginActivity extends BaseActivity implements ParseView {
     @Override
     public void showError(String message, View.OnClickListener onClickListener) {
         showRetrySnackBar(message, onClickListener);
-    }
-
-    @Override
-    public void showProgress() {
-        showProgress(true);
-    }
-
-    @Override
-    public void hideProgress() {
-        showProgress(false);
     }
 
     @Override
