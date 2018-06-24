@@ -13,6 +13,8 @@ public interface ParseInteractor extends MainInteractor {
 
     void logout(ParseCallbackStates callback);
 
+    void editProfile(String fullName, ParseCallbackStates callback);
+
     interface ParseCallbackStates extends CallbackStates {
         void onRegisterComplete();
 

@@ -3,12 +3,14 @@ package com.azhar.university.guide.presentation.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.azhar.university.guide.R;
 import com.azhar.university.guide.domain.communicator.OnLogoutCallback;
@@ -18,7 +20,11 @@ import com.parse.ParseInstallation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, OnLogoutCallback {
+public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, OnLogoutCallback {
+    @BindView(R.id.main_container)
+    ConstraintLayout container;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
 
@@ -32,6 +38,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         navigation.setOnNavigationItemSelectedListener(this);
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        setupUI();
+    }
+
+    @Override
+    protected View getSnackBarAnchorView() {
+        return container;
+    }
+
+    private void setupUI() {
+        setupSupportedActionBar(toolbar);
     }
 
     @Override
@@ -47,18 +64,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
                 return true;
             case R.id.navigation_more:
-                replace(MoreFragment.newInstance());
+                replace(MoreFragment.newInstance(), R.string.title_more);
                 return true;
         }
         return false;
     }
 
-    private void replace(Fragment fragment) {
+    private void replace(Fragment fragment, int titleId) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        setActionBarTitle(titleId);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.azhar.university.guide.presentation.ui.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.azhar.university.guide.domain.models.MoreItem;
 import com.azhar.university.guide.domain.views.ParseView;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenter;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenterImp;
+import com.azhar.university.guide.presentation.ui.activities.AccountInfoActivity;
 import com.azhar.university.guide.presentation.ui.adapters.MoreAdapter;
 import com.azhar.university.guide.presentation.ui.custom.CustomDividerItemDecoration;
 import com.azhar.university.guide.presentation.ui.utils.MoreIds;
@@ -72,6 +74,7 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
 
     private void init() {
         List<MoreItem> items = new ArrayList<>();
+        items.add(new MoreItem(MoreIds.MORE_EDIT_PROFILE_ID, R.string.more_edit_profile, R.drawable.ic_edit_profile));
         items.add(new MoreItem(MoreIds.MORE_LOGOUT_ID, R.string.more_log_out, R.drawable.ic_logout));
         MoreAdapter adapter = new MoreAdapter(items, this);
 
@@ -101,6 +104,9 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
     @Override
     public void onListInteraction(MoreItem item) {
         switch (item.getId()) {
+            case MoreIds.MORE_EDIT_PROFILE_ID:
+                startActivity(new Intent(getContext(), AccountInfoActivity.class));
+                break;
             case MoreIds.MORE_LOGOUT_ID:
                 presenter.logout();
                 break;
@@ -114,6 +120,11 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
 
     @Override
     public void onLoginComplete() {
+
+    }
+
+    @Override
+    public void onEditProfileComplete() {
 
     }
 

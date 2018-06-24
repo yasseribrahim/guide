@@ -1,5 +1,7 @@
 package com.azhar.university.guide.domain.models.parse;
 
+import com.parse.ParseUser;
+
 /**
  * Created by Yasser.Ibrahim on 6/12/2018.
  */
@@ -10,6 +12,11 @@ public class User {
     private String fullName;
 
     public User() {
+    }
+
+    public User(ParseUser user) {
+        this.email = user.getEmail();
+        this.fullName = (String) user.get(KEY_FULL_NAME);
     }
 
     public User(String email, String fullName) {

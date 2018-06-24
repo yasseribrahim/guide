@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Azhar University Guide</string>
+    <string name="app_name">University Guide</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -16,6 +16,8 @@
     <string name="error_invalid_confirmation_password">Your password and confirmation password do not match</string>
     <string name="error_field_required">This field is required</string>
 
+    <string name="menu_action_done">Done</string>
+
     <string name="label_retry">Retry</string>
     <string name="msg_general_error">Error happened! please, try again</string>
     <string name="msg_error_connection">Please, check your connection!</string>
@@ -24,14 +26,18 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">YwTdPhEffU8jKA3X5kFHODXV4O35VuNIaE2K6bRV</string>
     <string name="back4app_client_key">JPajEWWLHlKwdtTs4nHkjK3qSZtwPuPYWQSL39YD</string>
-    <string name="title_activity_home">HomeActivity</string>
+
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_more">More</string>
+    <string name="title_edit_profile">Edit Profile</string>
 
     <string name="more_log_out">Logout</string>
+    <string name="more_edit_profile">Edit Profile</string>
 
     <string name="dialog_msg_loading">Loading...</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="message_edit_profile_complete">Edit Profile Complete Success</string>
 </resources>

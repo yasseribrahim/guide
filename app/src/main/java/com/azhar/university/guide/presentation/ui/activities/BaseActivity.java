@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -26,6 +27,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         snackbar.setAction(R.string.label_retry, clickListener);
         snackbar.show();
         return snackbar;
+    }
+
+    protected void setActionBarTitle(int titleId) {
+        getSupportActionBar().setTitle(titleId);
+    }
+
+    protected void setupSupportedActionBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextAppearance(this, R.style.ToolBarShadowStyle);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+    }
+
+    protected void setupSupportedActionBarWithHome(Toolbar toolbar) {
+        setupSupportedActionBarWithHome(toolbar, R.drawable.ic_home);
+    }
+
+    protected void setupSupportedActionBarWithHome(Toolbar toolbar, int homeUpIndicatorId) {
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextAppearance(this, R.style.ToolBarShadowStyle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(homeUpIndicatorId);
     }
 
     public Snackbar showConnectionSnackBar(View.OnClickListener clickListener) {

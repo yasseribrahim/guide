@@ -56,37 +56,56 @@ public class ParsePresenterImp implements ParsePresenter, ParseInteractor.ParseC
     }
 
     @Override
+    public void editProfile(String fullName) {
+        interactor.editProfile(fullName, this);
+    }
+
+    @Override
     public void failure(String message, View.OnClickListener onClickListener) {
-        view.showError(message, onClickListener);
+        if (view != null) {
+            view.showError(message, onClickListener);
+        }
     }
 
     @Override
     public void showProgress() {
-        view.showProgress();
+        if (view != null) {
+            view.showProgress();
+        }
     }
 
     @Override
     public void hideProgress() {
-        view.hideProgress();
+        if (view != null) {
+            view.hideProgress();
+        }
     }
 
     @Override
     public void unAuthorized() {
-        view.unAuthorized();
+        if (view != null) {
+            view.unAuthorized();
+        }
     }
 
     @Override
     public void onRegisterComplete() {
-        view.onRegisterComplete();
+        if (view != null) {
+            view.onRegisterComplete();
+        }
     }
 
     @Override
     public void onLoginComplete() {
-        view.onLoginComplete();
+        if (view != null) {
+            view.onLoginComplete();
+        }
     }
 
     @Override
     public void onLogoutComplete() {
-        view.onLogoutComplete();
+        if (view != null) {
+            view.onLogoutComplete();
+        }
     }
 }

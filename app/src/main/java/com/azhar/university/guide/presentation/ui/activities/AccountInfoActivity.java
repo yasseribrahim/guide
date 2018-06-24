@@ -2,45 +2,47 @@ package com.azhar.university.guide.presentation.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.azhar.university.guide.R;
+import com.azhar.university.guide.domain.models.parse.User;
+import com.azhar.university.guide.domain.utils.ParseManager;
 import com.azhar.university.guide.domain.views.ParseView;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenter;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenterImp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class RegistrationActivity extends BaseActivity implements ParseView {
-    @BindView(R.id.registration_form)
-    View registrationFormView;
+public class AccountInfoActivity extends BaseActivity implements ParseView {
+    @BindView(R.id.account_info_form)
+    View accountInfoFormView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.full_name)
     AutoCompleteTextView name;
     @BindView(R.id.email)
     AutoCompleteTextView email;
-    @BindView(R.id.password)
-    EditText password;
-    @BindView(R.id.confirmation_password)
-    EditText confirmationPassword;
 
     private ParsePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_account_info);
 
         ButterKnife.bind(this);
 
         presenter = new ParsePresenterImp(this);
+
+        setupUI();
     }
 
     @Override
@@ -49,29 +51,30 @@ public class RegistrationActivity extends BaseActivity implements ParseView {
         presenter.onDestroy();
     }
 
-    @Override
-    protected View getSnackBarAnchorView() {
-        return registrationFormView;
+    private void setupUI() {
+        setupSupportedActionBarWithHome(toolbar);
+        setActionBarTitle(R.string.title_edit_profile);
+
+        User user = ParseManager.getInstance().getCurrentUser();
+        name.setText(user.getFullName());
+        email.setText(user.getEmail());
     }
 
-    @OnClick(R.id.join_now_button)
-    public void onJoinNowClicked() {
-        joinNow();
+    @Override
+    protected View getSnackBarAnchorView() {
+        return accountInfoFormView;
     }
 
     /**
-     * Attempts to sign in or register the account specified by the registration form.
+     * Attempts to sign in or register the account specified by the account_info form.
      * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual registration attempt is made.
+     * errors are presented and no actual account_info attempt is made.
      */
     private void joinNow() {
         reset();
 
-        // Store values at the time of the registration attempt.
+        // Store values at the time of the account_info attempt.
         String name = this.name.getText().toString();
-        String email = this.email.getText().toString();
-        String password = this.password.getText().toString();
-        String confirmationPassword = this.confirmationPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -87,53 +90,19 @@ public class RegistrationActivity extends BaseActivity implements ParseView {
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            this.email.setError(getString(R.string.error_field_required));
-            focusView = this.email;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            this.email.setError(getString(R.string.error_invalid_email));
-            focusView = this.email;
-            cancel = true;
-        }
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            this.password.setError(getString(R.string.error_invalid_password));
-            focusView = this.password;
-            cancel = true;
-        }
-
-        // Check for a valid confiramtion password, if the user entered one.
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(confirmationPassword)) {
-            this.confirmationPassword.setError(getString(R.string.error_field_required));
-            focusView = this.confirmationPassword;
-            cancel = true;
-        } else if (!isConfirmationPasswordValid(password, confirmationPassword)) {
-            this.confirmationPassword.setError(getString(R.string.error_invalid_confirmation_password));
-            focusView = this.confirmationPassword;
-            cancel = true;
-        }
-
         if (cancel) {
-            // There was an error; don't attempt registration and focus the first
+            // There was an error; don't attempt account_info and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user registration attempt.
-            presenter.register(email, password, name);
+            // perform the user account_info attempt.
+            presenter.editProfile(name);
         }
     }
 
     private void reset() {
-        // Reset errors.
-        email.setError(null);
-        password.setError(null);
         name.setError(null);
-        confirmationPassword.setError(null);
     }
 
     private boolean isEmailValid(String email) {
@@ -158,8 +127,6 @@ public class RegistrationActivity extends BaseActivity implements ParseView {
 
     @Override
     public void onRegisterComplete() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 
     @Override
@@ -168,12 +135,12 @@ public class RegistrationActivity extends BaseActivity implements ParseView {
 
     @Override
     public void onLogoutComplete() {
-
     }
 
     @Override
     public void onEditProfileComplete() {
-
+        showInfoSnackBar(R.string.message_edit_profile_complete);
+        finish();
     }
 
     @Override

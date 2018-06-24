@@ -12,4 +12,6 @@ public interface ParsePresenter extends MainPresenter {
     void login(String email, String password);
 
     void logout();
+
+    void editProfile(String fullName);
 }

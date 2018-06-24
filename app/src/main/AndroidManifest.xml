@@ -39,14 +39,15 @@
             android:theme="@style/AppTheme.ColoredStatusBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".presentation.ui.activities.HomeActivity"
+            android:name=".presentation.ui.activities.AccountInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.ColoredStatusBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".presentation.ui.activities.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".presentation.ui.activities.HomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme.ColoredStatusBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

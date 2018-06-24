@@ -1,5 +1,6 @@
 package com.azhar.university.guide.domain.utils;
 
+import com.azhar.university.guide.domain.models.parse.User;
 import com.parse.ParseUser;
 
 /**
@@ -18,5 +19,13 @@ public class ParseManager {
 
     public boolean isUserLogin() {
         return ParseUser.getCurrentUser() != null;
+    }
+
+    public ParseUser getCurrentParseUser() {
+        return ParseUser.getCurrentUser();
+    }
+
+    public User getCurrentUser() {
+        return new User(getCurrentParseUser());
     }
 }

@@ -152,6 +152,11 @@ public class LoginActivity extends BaseActivity implements ParseView {
     }
 
     @Override
+    public void onEditProfileComplete() {
+
+    }
+
+    @Override
     public void showConnectionError(View.OnClickListener onClickListener) {
         showConnectionSnackBar(onClickListener);
     }

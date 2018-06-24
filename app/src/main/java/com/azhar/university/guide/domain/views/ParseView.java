@@ -10,4 +10,6 @@ public interface ParseView extends BaseView {
     void onLoginComplete();
 
     void onLogoutComplete();
+
+    void onEditProfileComplete();
 }
