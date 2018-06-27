@@ -21,5 +21,7 @@ public interface ParseInteractor extends MainInteractor {
         void onLoginComplete();
 
         void onLogoutComplete();
+
+        void onEditProfileComplete();
     }
 }

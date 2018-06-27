@@ -101,7 +101,7 @@ public class ParseInteractorImp implements ParseInteractor {
             public void done(ParseException e) {
                 callback.hideProgress();
                 if (e == null) {
-                    callback.onRegisterComplete();
+                    callback.onEditProfileComplete();
                 } else {
                     callback.failure(e.getMessage(), new View.OnClickListener() {
                         @Override

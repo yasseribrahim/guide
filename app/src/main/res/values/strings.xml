@@ -40,4 +40,5 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="message_edit_profile_complete">Edit Profile Complete Success</string>
+    <string name="message_exit">Please click BACK again to exit</string>
 </resources>

@@ -6,12 +6,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -40,7 +47,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setupSupportedActionBarWithHome(Toolbar toolbar) {
-        setupSupportedActionBarWithHome(toolbar, R.drawable.ic_home);
+        setupSupportedActionBarWithHome(toolbar, R.drawable.ic_home_white);
+    }
+
+    protected void hideKeyboard() {
+        try {
+            if (getCurrentFocus() != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    protected void hideKeyboard(Dialog dialog) {
+        try {
+            if (dialog.getCurrentFocus() != null) {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(dialog.getCurrentFocus().getWindowToken(), 0);
+            }
+        } catch (Exception ignored) {
+        }
     }
 
     protected void setupSupportedActionBarWithHome(Toolbar toolbar, int homeUpIndicatorId) {

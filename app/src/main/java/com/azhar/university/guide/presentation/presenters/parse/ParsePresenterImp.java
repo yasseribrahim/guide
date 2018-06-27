@@ -108,4 +108,11 @@ public class ParsePresenterImp implements ParsePresenter, ParseInteractor.ParseC
             view.onLogoutComplete();
         }
     }
+
+    @Override
+    public void onEditProfileComplete() {
+        if (view != null) {
+            view.onEditProfileComplete();
+        }
+    }
 }

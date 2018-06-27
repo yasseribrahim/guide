@@ -13,7 +13,10 @@ import com.azhar.university.guide.R;
 import com.azhar.university.guide.domain.communicator.OnListInteractionListener;
 import com.azhar.university.guide.domain.communicator.OnLogoutCallback;
 import com.azhar.university.guide.domain.models.MoreItem;
+import com.azhar.university.guide.domain.views.MoreView;
 import com.azhar.university.guide.domain.views.ParseView;
+import com.azhar.university.guide.presentation.presenters.more.MorePresenter;
+import com.azhar.university.guide.presentation.presenters.more.MorePresenterImp;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenter;
 import com.azhar.university.guide.presentation.presenters.parse.ParsePresenterImp;
 import com.azhar.university.guide.presentation.ui.activities.AccountInfoActivity;
@@ -33,12 +36,15 @@ import butterknife.ButterKnife;
  * Activities containing this fragment MUST implement the {@link OnListInteractionListener}
  * interface.
  */
-public class MoreFragment extends BaseFragment implements ParseView, OnListInteractionListener<MoreItem> {
+public class MoreFragment extends BaseFragment implements ParseView, MoreView, OnListInteractionListener<MoreItem> {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private ParsePresenter presenter;
+    private ParsePresenter parsePresenter;
+    private MorePresenter morePresenter;
     private OnLogoutCallback callback;
+    private MoreAdapter adapter;
+    private List<MoreItem> items;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,23 +71,19 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
 
         ButterKnife.bind(this, view);
 
-        presenter = new ParsePresenterImp(this);
-
-        init();
-
-        return view;
-    }
-
-    private void init() {
-        List<MoreItem> items = new ArrayList<>();
-        items.add(new MoreItem(MoreIds.MORE_EDIT_PROFILE_ID, R.string.more_edit_profile, R.drawable.ic_edit_profile));
-        items.add(new MoreItem(MoreIds.MORE_LOGOUT_ID, R.string.more_log_out, R.drawable.ic_logout));
-        MoreAdapter adapter = new MoreAdapter(items, this);
+        parsePresenter = new ParsePresenterImp(this);
+        morePresenter = new MorePresenterImp(this);
+        items = new ArrayList<>();
+        adapter = new MoreAdapter(items, this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         CustomDividerItemDecoration dividerItemDecoration = new CustomDividerItemDecoration(getContext(), R.dimen.divider_mid);
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
+
+        morePresenter.getMoreItems();
+
+        return view;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
                 startActivity(new Intent(getContext(), AccountInfoActivity.class));
                 break;
             case MoreIds.MORE_LOGOUT_ID:
-                presenter.logout();
+                parsePresenter.logout();
                 break;
         }
     }
@@ -149,8 +151,16 @@ public class MoreFragment extends BaseFragment implements ParseView, OnListInter
     }
 
     @Override
+    public void onGetMoreItemsComplete(List<MoreItem> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.onDestroy();
+        parsePresenter.onDestroy();
+        morePresenter.onDestroy();
     }
 }

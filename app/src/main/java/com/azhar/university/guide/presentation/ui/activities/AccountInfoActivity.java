@@ -2,8 +2,12 @@ package com.azhar.university.guide.presentation.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -61,6 +65,30 @@ public class AccountInfoActivity extends BaseActivity implements ParseView {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_done, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_done:
+                hideKeyboard();
+                if (isAccountInfoChange()) {
+                    editProfile();
+                } else {
+                    finish();
+                }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected View getSnackBarAnchorView() {
         return accountInfoFormView;
     }
@@ -70,7 +98,7 @@ public class AccountInfoActivity extends BaseActivity implements ParseView {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual account_info attempt is made.
      */
-    private void joinNow() {
+    private void editProfile() {
         reset();
 
         // Store values at the time of the account_info attempt.
@@ -105,19 +133,12 @@ public class AccountInfoActivity extends BaseActivity implements ParseView {
         name.setError(null);
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
-
-    private boolean isConfirmationPasswordValid(String password, String confirmationPassword) {
-        //TODO: Replace this with your own logic
-        return password.equals(confirmationPassword);
+    private boolean isAccountInfoChange() {
+        User user = ParseManager.getInstance().getCurrentUser();
+        if (!user.getFullName().equals(this.name.getText().toString())) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isNameValid(String name) {
