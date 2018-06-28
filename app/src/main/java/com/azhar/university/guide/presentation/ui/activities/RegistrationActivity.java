@@ -177,6 +177,11 @@ public class RegistrationActivity extends BaseActivity implements ParseView {
     }
 
     @Override
+    public void onChangeProfilePictureComplete() {
+
+    }
+
+    @Override
     public void showConnectionError(View.OnClickListener onClickListener) {
         showConnectionSnackBar(onClickListener);
     }

@@ -25,7 +25,31 @@ public class ParseManager {
         return ParseUser.getCurrentUser();
     }
 
+    public void storeUser(ParseUser parseUser) {
+        User user = new User(parseUser);
+//        UserManager.getManager().saveUser(user);
+    }
+
     public User getCurrentUser() {
         return new User(getCurrentParseUser());
+    }
+
+    public void refreshCurrentUser() {
+        try {
+            ParseUser user = getCurrentParseUser();
+            if (user != null) {
+                user.fetch();
+            }
+        } catch (Exception ex) {
+//            if (ex instanceof ParseException) {
+//                ParseException exception = (ParseException) ex;
+//                if (exception.getCode() == ParseException.INVALID_SESSION_TOKEN ||
+//                        exception.getCode() == ParseException.SESSION_MISSING ||
+//                        exception.getCode() == ParseException.INVALID_LINKED_SESSION) {
+//                    ParseUser.logOut();
+//                }
+//            }
+            ex.printStackTrace();
+        }
     }
 }

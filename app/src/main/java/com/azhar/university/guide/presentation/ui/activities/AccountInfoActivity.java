@@ -159,6 +159,10 @@ public class AccountInfoActivity extends BaseActivity implements ParseView {
     }
 
     @Override
+    public void onChangeProfilePictureComplete() {
+    }
+
+    @Override
     public void onEditProfileComplete() {
         showInfoSnackBar(R.string.message_edit_profile_complete);
         finish();

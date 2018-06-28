@@ -19,8 +19,6 @@
     <string name="menu_action_done">Done</string>
 
     <string name="label_retry">Retry</string>
-    <string name="msg_general_error">Error happened! please, try again</string>
-    <string name="msg_error_connection">Please, check your connection!</string>
 
     <!-- Change the following strings as required -->
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
@@ -39,6 +37,17 @@
     <string name="dialog_msg_loading">Loading...</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <string name="message_general_error">Error happened! please, try again</string>
+    <string name="message_error_connection">Please, check your connection!</string>
     <string name="message_edit_profile_complete">Edit Profile Complete Success</string>
     <string name="message_exit">Please click BACK again to exit</string>
+    <string name="message_profile_image_max_size">Image max size is 2 MB!</string>
+
+    <string name="title_dialog_profile_image">Profile picture</string>
+    <string-array name="profile_image_options">
+        <item>Take a picture</item>
+        <item>Choose a picture</item>
+        <item>Delete</item>
+        <item>Cancel</item>
+    </string-array>
 </resources>

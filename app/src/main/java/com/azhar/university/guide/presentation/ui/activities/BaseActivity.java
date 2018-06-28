@@ -8,17 +8,13 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -81,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public Snackbar showConnectionSnackBar(View.OnClickListener clickListener) {
-        Snackbar snackbar = Snackbar.make(getSnackBarAnchorView(), R.string.msg_error_connection, Snackbar.LENGTH_INDEFINITE);
+        Snackbar snackbar = Snackbar.make(getSnackBarAnchorView(), R.string.message_error_connection, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(R.string.label_retry, clickListener);
         snackbar.show();
         return snackbar;

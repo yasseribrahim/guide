@@ -1,5 +1,10 @@
 package com.azhar.university.guide.domain.models.parse;
 
+import android.util.Base64;
+
+import com.azhar.university.guide.domain.utils.Constants;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 /**
@@ -7,21 +12,23 @@ import com.parse.ParseUser;
  */
 
 public class User {
-    public static final String KEY_FULL_NAME = "fullName";
     private String email;
     private String fullName;
+    private String photoString;
 
     public User() {
     }
 
     public User(ParseUser user) {
         this.email = user.getEmail();
-        this.fullName = (String) user.get(KEY_FULL_NAME);
-    }
-
-    public User(String email, String fullName) {
-        this.email = email;
-        this.fullName = fullName;
+        this.fullName = (String) user.get(Constants.KEY_FULL_NAME);
+        ParseFile parseFile = user.getParseFile(Constants.KEY_PHOTO);
+        try {
+            if (parseFile != null)
+                this.photoString = Base64.encodeToString(parseFile.getData(), Base64.NO_WRAP);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getEmail() {
@@ -40,11 +47,20 @@ public class User {
         this.fullName = fullName;
     }
 
+    public String getPhotoString() {
+        return photoString;
+    }
+
+    public void setPhotoString(String photoString) {
+        this.photoString = photoString;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
                 ", fullName='" + fullName + '\'' +
+                ", photoString='" + photoString + '\'' +
                 '}';
     }
 

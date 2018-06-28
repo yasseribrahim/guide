@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 
 import com.azhar.university.guide.R;
-import com.azhar.university.guide.presentation.ui.utils.Constants;
+import com.azhar.university.guide.domain.utils.Constants;
 
 public class ProgressDialogFragment extends DialogFragment {
     private static final String TAG = ProgressDialogFragment.class.getSimpleName();

@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.azhar.university.guide.R;
 import com.azhar.university.guide.domain.utils.ParseManager;
+import com.azhar.university.guide.presentation.ui.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,9 @@ public class SplashActivity extends BaseActivity {
         public void run() {
             if (ParseManager.getInstance().isUserLogin()) {
                 startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                if (Utils.isConnectingToInternet()) {
+                    ParseManager.getInstance().refreshCurrentUser();
+                }
                 finish();
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
@@ -49,7 +53,7 @@ public class SplashActivity extends BaseActivity {
         if (isGooglePlayServicesAvailable(this)) {
             handler.postDelayed(runnable, SPLASH_DELAY_MILLIS);
         } else {
-            showRetrySnackBar(getString(R.string.msg_general_error), new View.OnClickListener() {
+            showRetrySnackBar(getString(R.string.message_general_error), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     gotoApp();

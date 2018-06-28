@@ -2,6 +2,8 @@ package com.azhar.university.guide.presentation.presenters.parse;
 
 import com.azhar.university.guide.presentation.presenters.MainPresenter;
 
+import java.io.File;
+
 /**
  * Created by Yasser.Ibrahim on 6/12/2018.
  */
@@ -14,4 +16,6 @@ public interface ParsePresenter extends MainPresenter {
     void logout();
 
     void editProfile(String fullName);
+
+    void changeProfilePicture(File file);
 }

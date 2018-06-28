@@ -2,14 +2,17 @@ package com.azhar.university.guide.domain.interactors.parse;
 
 import android.view.View;
 
-import com.azhar.university.guide.domain.models.parse.User;
+import com.azhar.university.guide.domain.utils.Constants;
 import com.azhar.university.guide.domain.utils.ParseManager;
 import com.parse.LogInCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import java.io.File;
 
 /**
  * Created by Yasser.Ibrahim on 6/12/2018.
@@ -28,7 +31,7 @@ public class ParseInteractorImp implements ParseInteractor {
         parse.setUsername(email);
         parse.setPassword(password);
         parse.setEmail(email);
-        parse.put(User.KEY_FULL_NAME, fullName);
+        parse.put(Constants.KEY_FULL_NAME, fullName);
 
         parse.signUpInBackground(new SignUpCallback() {
             @Override
@@ -54,6 +57,7 @@ public class ParseInteractorImp implements ParseInteractor {
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
+                ParseManager.getInstance().storeUser(user);
                 callback.hideProgress();
                 if (e == null) {
                     callback.onLoginComplete();
@@ -94,7 +98,7 @@ public class ParseInteractorImp implements ParseInteractor {
     public void editProfile(final String fullName, final ParseCallbackStates callback) {
         callback.showProgress();
         parse = ParseManager.getInstance().getCurrentParseUser();
-        parse.put(User.KEY_FULL_NAME, fullName);
+        parse.put(Constants.KEY_FULL_NAME, fullName);
 
         parse.saveInBackground(new SaveCallback() {
             @Override
@@ -107,6 +111,45 @@ public class ParseInteractorImp implements ParseInteractor {
                         @Override
                         public void onClick(View v) {
                             editProfile(fullName, callback);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void changeProfilePicture(final File file, final ParseCallbackStates callback) {
+        callback.showProgress();
+        final ParseUser user = ParseManager.getInstance().getCurrentParseUser();
+        final ParseFile parseFile = new ParseFile(file);
+        parseFile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    user.put(Constants.KEY_PHOTO, parseFile);
+                    parse.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            callback.hideProgress();
+                            if (e == null) {
+                                callback.onChangeProfilePictureComplete();
+                            } else {
+                                callback.failure(e.getMessage(), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        changeProfilePicture(file, callback);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    callback.hideProgress();
+                    callback.failure(e.getMessage(), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            changeProfilePicture(file, callback);
                         }
                     });
                 }

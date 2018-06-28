@@ -2,6 +2,8 @@ package com.azhar.university.guide.domain.interactors.parse;
 
 import com.azhar.university.guide.domain.interactors.MainInteractor;
 
+import java.io.File;
+
 /**
  * Created by Yasser.Ibrahim on 6/12/2018.
  */
@@ -15,6 +17,8 @@ public interface ParseInteractor extends MainInteractor {
 
     void editProfile(String fullName, ParseCallbackStates callback);
 
+    void changeProfilePicture(File file, ParseCallbackStates callback);
+
     interface ParseCallbackStates extends CallbackStates {
         void onRegisterComplete();
 
@@ -23,5 +27,7 @@ public interface ParseInteractor extends MainInteractor {
         void onLogoutComplete();
 
         void onEditProfileComplete();
+
+        void onChangeProfilePictureComplete();
     }
 }

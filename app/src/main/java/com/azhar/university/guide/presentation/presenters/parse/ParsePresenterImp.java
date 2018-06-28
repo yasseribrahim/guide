@@ -6,6 +6,8 @@ import com.azhar.university.guide.domain.interactors.parse.ParseInteractor;
 import com.azhar.university.guide.domain.interactors.parse.ParseInteractorImp;
 import com.azhar.university.guide.domain.views.ParseView;
 
+import java.io.File;
+
 /**
  * Created by Yasser.Ibrahim on 6/12/2018.
  */
@@ -61,6 +63,11 @@ public class ParsePresenterImp implements ParsePresenter, ParseInteractor.ParseC
     }
 
     @Override
+    public void changeProfilePicture(File file) {
+        interactor.changeProfilePicture(file, this);
+    }
+
+    @Override
     public void failure(String message, View.OnClickListener onClickListener) {
         if (view != null) {
             view.showError(message, onClickListener);
@@ -113,6 +120,13 @@ public class ParsePresenterImp implements ParsePresenter, ParseInteractor.ParseC
     public void onEditProfileComplete() {
         if (view != null) {
             view.onEditProfileComplete();
+        }
+    }
+
+    @Override
+    public void onChangeProfilePictureComplete() {
+        if (view != null) {
+            view.onChangeProfilePictureComplete();
         }
     }
 }
